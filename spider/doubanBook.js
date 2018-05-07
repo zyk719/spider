@@ -1,9 +1,9 @@
 // zyy 2018-5-6
 
-// 同步 request 库，有同步库就用同步，深 V 代码可读性差；
+// 同步的 request 库，有同步库就用同步，深 V 代码可读性差；
 const request = require("sync-request")
 
-// 可以向 dom 一样选择；
+// 可以说缓存的网页通过选择器选择；
 const cheerio = require("cheerio")
 
 // 读写文件；
@@ -46,7 +46,7 @@ const cachedUrl = (url, path) => {
     }
 }
 
-// 0.中国的作家竟然不写国籍了，处理下。
+// 0.中国的作家没有国籍了，加上，统一格式；
 const addCountry = (str) => {
     let author = str
     if (author[14] != ' ') {
@@ -56,7 +56,7 @@ const addCountry = (str) => {
     return author
 }
 
-// top250 简介页面作者国籍数据实在没法洗，去详情页面拿把，慢点就慢点；
+// top250 简介页面作者国籍数据；
 const takeoutAuthor = (url, str) => {
     let bookTitle0 = str
     let path = 'douban_book_html_0/' + bookTitle0 + '.html'
@@ -73,7 +73,7 @@ const takeoutAuthor = (url, str) => {
     }
 }
 
-// 获得 目标网页块 后，仔细观察，慢慢爬喽~
+// 获得网页块，选取目标tag；
 const bookInfoFromTable = (obj, id) => {
     let table = cheerio.load(obj)
     let book = new Book()
@@ -109,7 +109,7 @@ const bookInfoFromTable = (obj, id) => {
     let cPlnums = Number(plnums.split('人评价')[0].slice(1))
     book.plnums = cPlnums
 
-    // 引言 也是醉了 有几个没有引言！！！
+    // 引言
     // 通过加 id 找出没有引言的，然后排除掉。
     if (book.id == 155 || book.id == 189 || book.id == 201 || book.id == 216 || book.id == 217 || book.id == 228 || book.id == 241) {
         let quote = ''
@@ -127,7 +127,7 @@ const bookInfoFromTable = (obj, id) => {
     return book
 }
 
-// 从 网址 到 数据
+// 从 网址 到 数据；
 const booksFromUrl = (url) => {
     let id = Number(url.split('=')[1])
     // 根据网址给缓存起名字
