@@ -1,11 +1,9 @@
 // zyy 2018-5-6
 
-// 同步的 request 库，有同步库就用同步，深 V 代码可读性差；
+// 同步的 request 库；
 const request = require("sync-request")
-
 // 可以说缓存的网页通过选择器选择；
 const cheerio = require("cheerio")
-
 // 读写文件；
 const fs = require("fs")
 
